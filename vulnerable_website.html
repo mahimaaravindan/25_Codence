@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureBank - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Matrix rain effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0a0a0a 25%, transparent 25%), 
+                        linear-gradient(-45deg, #0a0a0a 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #0a0a0a 75%), 
+                        linear-gradient(-45deg, transparent 75%, #0a0a0a 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        /* Terminal-style header */
+        .terminal-header {
+            background: linear-gradient(90deg, #1a1a1a, #2d2d2d, #1a1a1a);
+            padding: 10px 20px;
+            border-bottom: 2px solid #00ff00;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0, 255, 0, 0.3);
+        }
+
+        .terminal-title {
+            color: #00ff00;
+            font-weight: bold;
+            font-size: 18px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .terminal-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .control-close { background: #ff5f56; }
+        .control-minimize { background: #ffbd2e; }
+        .control-maximize { background: #27ca3f; }
+
+        /* Main container */
+        .container {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem auto;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            position: relative;
+        }
+
+        /* Hacking tool logo */
+        .hack-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .hack-logo::before {
+            content: '⚡';
+            font-size: 3rem;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        .hack-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0 0 15px #00ff00;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .hack-subtitle {
+            color: #00aa00;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00ff00;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        input::placeholder {
+            color: #00aa00;
+            opacity: 0.7;
+        }
+
+        /* Attack button */
+        .attack-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff0000, #ff6600);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .attack-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .attack-btn:hover::before {
+            left: 100%;
+        }
+
+        .attack-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Info panels */
+        .info-panel {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .info-panel::before {
+            content: '>';
+            color: #00ff00;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            font-weight: bold;
+        }
+
+        .info-panel h3 {
+            color: #00ff00;
+            margin-left: 20px;
+            margin-bottom: 0.5rem;
+            font-size: 16px;
+        }
+
+        .info-panel p {
+            color: #00aa00;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        /* Attack examples */
+        .attack-examples {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .attack-examples h4 {
+            color: #ff0000;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .sql-example {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #ff0000;
+            border-radius: 3px;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #ff0000;
+            position: relative;
+        }
+
+        .sql-example::before {
+            content: '$';
+            color: #00ff00;
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            font-weight: bold;
+        }
+
+        .sql-example span {
+            margin-left: 15px;
+        }
+
+        /* Status indicators */
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff00;
+            animation: blink 1s infinite;
+        }
+
+        .status-text {
+            color: #00ff00;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        /* Glitch effect */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            animation: glitch-1 0.5s infinite;
+            color: #ff0000;
+            z-index: -1;
+        }
+
+        .glitch::after {
+            animation: glitch-2 0.5s infinite;
+            color: #00ffff;
+            z-index: -2;
+        }
+
+        @keyframes glitch-1 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        @keyframes glitch-2 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(2px, -2px); }
+            40% { transform: translate(2px, 2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(-2px, 2px); }
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff00;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff00, #00ffff);
+            width: 0%;
+            transition: width 0.5s ease;
+            animation: progress-glow 2s infinite;
+        }
+
+        @keyframes progress-glow {
+            0%, 100% { box-shadow: 0 0 10px #00ff00; }
+            50% { box-shadow: 0 0 20px #00ffff; }
+        }
+
+        /* Tool icons */
+        .tool-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 1rem 0;
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+            animation: tool-rotate 3s infinite linear;
+        }
+
+        @keyframes tool-rotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Terminal Header -->
+    <div class="terminal-header">
+        <div class="terminal-title">SQLMAP v2.1.0 - SQL Injection Tool</div>
+        <div class="terminal-controls">
+            <button class="control-btn control-close"></button>
+            <button class="control-btn control-minimize"></button>
+            <button class="control-btn control-maximize"></button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Hacking Tool Header -->
+        <div class="hack-logo">
+            <div class="hack-title glitch" data-text="SQLMAP">SQLMAP</div>
+            <div class="hack-subtitle">Advanced SQL Injection & Database Takeover Tool</div>
+        </div>
+
+        <!-- Tool Icons -->
+        <div class="tool-icons">
+            <div class="tool-icon">🔓</div>
+            <div class="tool-icon">💉</div>
+            <div class="tool-icon">🗄️</div>
+            <div class="tool-icon">⚡</div>
+        </div>
+
+        <!-- Status Indicator -->
+        <div class="status">
+            <div class="status-dot"></div>
+            <div class="status-text">READY TO EXPLOIT - TARGET: SecureBank Database</div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <!-- Attack Form -->
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">TARGET EMAIL FIELD</label>
+                <input type="text" id="email" name="email" placeholder="Enter SQL injection payload here..." required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">TARGET PASSWORD FIELD</label>
+                <input type="password" id="password" name="password" placeholder="Enter any password value..." required>
+            </div>
+            
+            <button type="submit" class="attack-btn">🚀 EXECUTE SQL INJECTION ATTACK</button>
+        </form>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <h3>MISSION OBJECTIVE</h3>
+            <p>Exploit SQL injection vulnerability in SecureBank's authentication system to extract sensitive customer data including SSNs, credit cards, and personal information.</p>
+        </div>
+
+        <!-- Attack Examples -->
+        <div class="attack-examples">
+            <h4>💀 SQL INJECTION PAYLOADS</h4>
+            <div class="sql-example"><span>admin@bank.com' OR '1'='1</span></div>
+            <div class="sql-example"><span>' UNION SELECT email,password FROM users--</span></div>
+            <div class="sql-example"><span>' OR 1=1--</span></div>
+            <div class="sql-example"><span>'; DROP TABLE users--</span></div>
+            
+            <h4 style="margin-top: 1rem; color: #00ffff;">🔍 EMAIL DISCOVERY TECHNIQUES</h4>
+            <div class="sql-example"><span>' UNION SELECT email,email FROM users--</span></div>
+            <div class="sql-example"><span>' UNION SELECT email,email FROM users WHERE email LIKE 'admin%'--</span></div>
+            <div class="sql-example"><span>' UNION SELECT email,email FROM users LIMIT 1--</span></div>
+        </div>
+
+        <!-- Tool Info -->
+        <div class="info-panel">
+            <h3>TOOL FEATURES</h3>
+            <p>• Automatic SQL injection detection • Database enumeration • Data extraction • Multiple attack vectors • Real-time progress tracking</p>
+        </div>
+    </div>
+
+    <script>
+        // Simulated database of users with comprehensive personal details
+        const users = [
+            { 
+                email: 'john@bank.com', 
+                password: 'john123', 
+                name: 'John Doe', 
+                balance: 50000,
+                ssn: '123-45-6789',
+                phone: '+1-555-0123',
+                address: '123 Main St, New York, NY 10001',
+                dateOfBirth: '1985-03-15',
+                accountNumber: '1001-2345-6789-0123',
+                routingNumber: '021000021',
+                creditCard: '4532-1234-5678-9012',
+                cvv: '123',
+                expiryDate: '12/25',
+                motherMaidenName: 'Smith',
+                securityQuestion: 'What was your first pet?',
+                securityAnswer: 'Fluffy',
+                lastLogin: '2024-01-15 14:30:00',
+                ipAddress: '192.168.1.101'
+            },
+            { 
+                email: 'jane@bank.com', 
+                password: 'jane456', 
+                name: 'Jane Smith', 
+                balance: 75000,
+                ssn: '987-65-4321',
+                phone: '+1-555-0456',
+                address: '456 Oak Ave, Los Angeles, CA 90210',
+                dateOfBirth: '1990-07-22',
+                accountNumber: '2002-3456-7890-1234',
+                routingNumber: '121000248',
+                creditCard: '5555-4444-3333-2222',
+                cvv: '456',
+                expiryDate: '08/26',
+                motherMaidenName: 'Johnson',
+                securityQuestion: 'What was your childhood street?',
+                securityAnswer: 'Maple Lane',
+                lastLogin: '2024-01-15 16:45:00',
+                ipAddress: '192.168.1.102'
+            },
+            { 
+                email: 'admin@bank.com', 
+                password: 'admin789', 
+                name: 'Admin User', 
+                balance: 100000,
+                ssn: '111-22-3333',
+                phone: '+1-555-0789',
+                address: '789 Admin Blvd, Washington, DC 20001',
+                dateOfBirth: '1980-01-01',
+                accountNumber: '3003-4567-8901-2345',
+                routingNumber: '021000021',
+                creditCard: '4111-1111-1111-1111',
+                cvv: '789',
+                expiryDate: '03/27',
+                motherMaidenName: 'Admin',
+                securityQuestion: 'What is your favorite color?',
+                securityAnswer: 'Blue',
+                lastLogin: '2024-01-15 18:20:00',
+                ipAddress: '192.168.1.103'
+            },
+            { 
+                email: 'mike@bank.com', 
+                password: 'mike321', 
+                name: 'Mike Johnson', 
+                balance: 25000,
+                ssn: '444-55-6666',
+                phone: '+1-555-0321',
+                address: '321 Pine Rd, Chicago, IL 60601',
+                dateOfBirth: '1995-11-08',
+                accountNumber: '4004-5678-9012-3456',
+                routingNumber: '071000013',
+                creditCard: '3782-822463-10005',
+                cvv: '321',
+                expiryDate: '09/25',
+                motherMaidenName: 'Williams',
+                securityQuestion: 'What was your first car?',
+                securityAnswer: 'Honda Civic',
+                lastLogin: '2024-01-15 12:15:00',
+                ipAddress: '192.168.1.104'
+            }
+        ];
+
+        // Simulated vulnerable SQL query function
+        function vulnerableSQLQuery(email, password) {
+            // This simulates a vulnerable SQL query
+            // In real applications, this would be: "SELECT * FROM users WHERE email='" + email + "' AND password='" + password + "'"
+            
+            // Check for SQL injection patterns
+            if (email.includes("' OR '1'='1") || email.includes("' OR 1=1--")) {
+                // SQL injection detected - return all users
+                return users;
+            }
+            
+            if (email.includes("UNION SELECT") || email.includes("UNION")) {
+                // UNION attack detected - return all users
+                return users;
+            }
+            
+            if (email.includes("' OR 1=1") || email.includes("' OR 'x'='x")) {
+                // OR injection detected - return all users
+                return users;
+            }
+            
+            if (email.includes("'--") || email.includes("' #")) {
+                // Comment injection detected - return all users
+                return users;
+            }
+            
+            if (email.includes("'; DROP TABLE users;--")) {
+                // Drop table attack detected - return all users
+                return users;
+            }
+            
+            if (email.includes("' OR '1'='1' LIMIT 1--")) {
+                // Limited injection detected - return all users
+                return users;
+            }
+            
+            // Email discovery techniques
+            if (email.includes("UNION SELECT email,email FROM users")) {
+                // Email enumeration attack detected
+                console.log('🔍 EMAIL DISCOVERY ATTACK DETECTED!');
+                return users;
+            }
+            
+            if (email.includes("LIKE '%@%'") || email.includes("LIKE 'admin%'")) {
+                // Pattern-based email discovery
+                console.log('🔍 PATTERN-BASED EMAIL DISCOVERY!');
+                return users;
+            }
+            
+            if (email.includes("information_schema") || email.includes("table_name")) {
+                // Database schema enumeration
+                console.log('🔍 DATABASE SCHEMA ENUMERATION!');
+                return users;
+            }
+            
+            // Normal login attempt
+            return users.filter(user => user.email === email && user.password === password);
+        }
+
+        // Function to steal credentials (simulates what an attacker would see)
+        function stealCredentials(email, password) {
+            console.log('🎯 HACKER SUCCESS - Credentials Stolen:');
+            console.log('📧 Email Used:', email);
+            console.log('🔑 Password Used:', password);
+            
+            // In a real attack, this would be sent to attacker's server
+            const stolenData = {
+                timestamp: new Date().toISOString(),
+                email: email,
+                password: password,
+                userAgent: navigator.userAgent,
+                ip: '192.168.1.100' // Simulated IP
+            };
+            
+            console.log('📊 Initial stolen data:', stolenData);
+            
+            // Display comprehensive stolen user data
+            console.log('🔓 COMPLETE USER DATABASE HACKED:');
+            users.forEach((user, index) => {
+                console.log(`\n👤 USER ${index + 1}: ${user.name}`);
+                console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+                console.log(`📧 Email: ${user.email}`);
+                console.log(`🔑 Password: ${user.password}`);
+                console.log(`💰 Balance: $${user.balance.toLocaleString()}`);
+                console.log(`🆔 SSN: ${user.ssn}`);
+                console.log(`📱 Phone: ${user.phone}`);
+                console.log(`🏠 Address: ${user.address}`);
+                console.log(`🎂 Date of Birth: ${user.dateOfBirth}`);
+                console.log(`🏦 Account Number: ${user.accountNumber}`);
+                console.log(`🏛️ Routing Number: ${user.routingNumber}`);
+                console.log(`💳 Credit Card: ${user.creditCard}`);
+                console.log(`🔢 CVV: ${user.cvv}`);
+                console.log(`📅 Expiry Date: ${user.expiryDate}`);
+                console.log(`👩 Mother's Maiden Name: ${user.motherMaidenName}`);
+                console.log(`❓ Security Question: ${user.securityQuestion}`);
+                console.log(`✅ Security Answer: ${user.securityAnswer}`);
+                console.log(`🕒 Last Login: ${user.lastLogin}`);
+                console.log(`🌐 IP Address: ${user.ipAddress}`);
+                console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+            });
+            
+            // Create downloadable data for attacker
+            const attackerData = {
+                attackTimestamp: new Date().toISOString(),
+                attackerIP: '192.168.1.100',
+                totalUsersCompromised: users.length,
+                users: users,
+                attackVector: 'SQL Injection',
+                payload: email
+            };
+            
+            console.log('📥 HACKER DOWNLOAD DATA:', attackerData);
+            
+            // Simulate sending data to hacker's server
+            console.log('🌐 SENDING HACKED DATA TO YOUR SERVER...');
+            console.log('📡 Data transmission complete!');
+            console.log('🎉 CONGRATULATIONS! You successfully hacked the bank!');
+            
+            // Create downloadable file for hacker
+            createAttackerDownload(attackerData);
+        }
+        
+        // Function to create downloadable file for hacker
+        function createAttackerDownload(data) {
+            const jsonData = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `hacked_bank_data_${new Date().toISOString().slice(0,19).replace(/:/g,'-')}.json`;
+            a.style.display = 'none';
+            
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            console.log('💾 HACKED DATA FILE DOWNLOADED!');
+            console.log('📁 Filename:', a.download);
+            console.log('🎯 You now have complete access to all bank customer data!');
+        }
+
+        // Function to show attack success
+        function showAttackSuccess() {
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <div class="logo">🏦 SecureBank</div>
+                <h2 style="color: #28a745;">🎯 HACK SUCCESSFUL!</h2>
+                
+                <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                    <h3 style="color: #155724;">✅ SQL Injection Attack Completed!</h3>
+                    <p style="color: #155724; margin: 1rem 0;">
+                        You have successfully exploited the SQL injection vulnerability and gained access to the entire user database.
+                    </p>
+                    <ul style="text-align: left; margin: 1rem 0; color: #155724;">
+                        <li>✅ Database bypassed successfully</li>
+                        <li>✅ All user credentials stolen</li>
+                        <li>✅ Personal information exposed</li>
+                        <li>✅ Financial data compromised</li>
+                        <li>✅ Security questions answered</li>
+                        <li>✅ JSON file downloaded automatically</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                    <h4 style="color: #856404;">🔓 What You Stole:</h4>
+                    <div style="font-size: 12px; color: #856404;">
+                        <strong>👥 Total Users Hacked:</strong> ${users.length} customers<br>
+                        <strong>💰 Total Money Exposed:</strong> $${users.reduce((sum, user) => sum + user.balance, 0).toLocaleString()}<br>
+                        <strong>💳 Credit Cards:</strong> ${users.length} cards with CVVs<br>
+                        <strong>🆔 SSNs:</strong> ${users.length} social security numbers<br>
+                        <strong>🏠 Addresses:</strong> ${users.length} home addresses<br>
+                        <strong>📱 Phone Numbers:</strong> ${users.length} phone numbers
+                    </div>
+                </div>
+                
+                <div style="background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                    <h4 style="color: #721c24;">📥 Data Retrieved:</h4>
+                    <div style="font-size: 12px; color: #721c24;">
+                        <strong>📊 Console Log:</strong> Check F12 → Console for detailed stolen data<br>
+                        <strong>💾 JSON File:</strong> Automatically downloaded to your computer<br>
+                        <strong>🌐 Server Log:</strong> Data transmitted to your server<br>
+                        <strong>⏰ Timestamp:</strong> ${new Date().toLocaleString()}
+                    </div>
+                </div>
+                
+                <div style="background: #cce5ff; border: 1px solid #b3d9ff; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                    <h4 style="color: #004085;">🎭 Next Steps:</h4>
+                    <p style="color: #004085; font-size: 14px;">
+                        You can now use this stolen data for identity theft, credit card fraud, or sell it on the dark web.
+                    </p>
+                </div>
+                
+                <button onclick="location.reload()" class="login-btn" style="margin-top: 1rem;">Try Another Attack</button>
+            `;
+        }
+
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            console.log('🔐 ATTACK INITIATED:', { email, password });
+            
+            // Update status and progress
+            updateStatus('ATTACKING TARGET DATABASE...');
+            
+            // Simulate attack progress
+            setTimeout(() => {
+                updateStatus('EXPLOITING SQL INJECTION VULNERABILITY...');
+            }, 1000);
+            
+            setTimeout(() => {
+                updateStatus('EXTRACTING DATABASE SCHEMA...');
+            }, 2000);
+            
+            setTimeout(() => {
+                updateStatus('ACCESSING USER RECORDS...');
+            }, 3000);
+            
+            // Simulate vulnerable SQL query
+            setTimeout(() => {
+                const result = vulnerableSQLQuery(email, password);
+                
+                if (result.length > 0) {
+                    if (result.length === users.length) {
+                        // SQL injection attack successful
+                        console.log('🚨 SQL INJECTION ATTACK SUCCESSFUL!');
+                        console.log('📊 All user data exposed:', result);
+                        
+                        updateStatus('ATTACK SUCCESSFUL - DATA EXTRACTED!');
+                        
+                        // Steal the credentials that were entered
+                        stealCredentials(email, password);
+                        
+                        // Show attack success message
+                        showAttackSuccess();
+                    } else {
+                        // Normal login successful
+                        const user = result[0];
+                        updateStatus('NORMAL LOGIN - NO VULNERABILITY DETECTED');
+                        alert(`Welcome ${user.name}! Your balance is $${user.balance.toLocaleString()}`);
+                    }
+                } else {
+                    updateStatus('ATTACK FAILED - INVALID CREDENTIALS');
+                    alert('Invalid credentials. Please try again.');
+                }
+            }, 4000);
+        });
+
+        // Progress bar animation
+        function animateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                } else {
+                    width++;
+                    progressBar.style.width = width + '%';
+                }
+            }, 50);
+        }
+
+        // Update status text
+        function updateStatus(text) {
+            const statusText = document.querySelector('.status-text');
+            statusText.textContent = text;
+        }
+
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎯 SQLMAP TOOL LOADED');
+            console.log('💡 Target: SecureBank Database');
+            console.log('📊 Available attack vectors:', users.length, 'users');
+            console.log('🔓 Ready to exploit and extract data...');
+            
+            // Animate progress bar on load
+            animateProgress();
+            
+            // Update status
+            updateStatus('TOOL INITIALIZED - READY FOR ATTACK');
+        });
+    </script>
+</body>
+</html>

