@@ -1,19 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Codence Web Audit</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureBank - Online Banking Portal</title>
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+    <link rel="canonical" href="https://example.invalid/">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-dark">
-<div class="container">
-<h1 class="title glitch" data-text="WELCOME TO CODENCE WEB AUDIT">WELCOME TO CODENCE WEB AUDIT</h1>
-<p class="subtitle">This website is used to check for vulnerabilities.</p>
-<p class="description">Our tool scans for security flaws, performance bottlenecks, SEO issues, and accessibility compliance to make your website safer and faster.</p>
-<div class="buttons">
-<a href="/enter-url" class="btn">SCAN WEBSITE</a>
-<a href="{{ url_for('report') }}" class="btn neon">Sample Report</a>
-<script src="{{ url_for('static', filename='voice.js') }}"></script>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">SecureBank</h1>
+            <div id="userInfo" class="user-info">
+                <button class="btn btn-secondary" onclick="showLogin()">Login</button>
+                <button class="btn btn-primary" onclick="showRegister()">Register</button>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#search">Search</a></li>
+                <li><a href="#profile">Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <h2>Welcome to SecureBank</h2>
+                <p>Your trusted partner for secure online banking</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="showLogin()">Login</button>
+                    <button class="btn btn-secondary" onclick="showRegister()">Register</button>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section id="search" class="search-section">
+            <div class="container">
+                <h3>Search Transactions</h3>
+                <div class="search-form">
+                    <input type="text" id="searchInput" placeholder="Enter transaction ID or description..." class="search-input">
+                    <button onclick="searchTransactions()" class="btn btn-primary">Search</button>
+                </div>
+                <div id="searchResults" class="search-results"></div>
+            </div>
+        </section>
+
+        <section id="profile" class="profile-section">
+            <div class="container">
+                <h3>User Profile</h3>
+                <div id="profileContent" class="profile-content">
+                    <div class="profile-info">
+                        <h4>Profile Information</h4>
+                        <div id="userProfileInfo">
+                            <p>Please login to view your profile information.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h3>Login to SecureBank</h3>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h3>Create Account</h3>
+            <form id="registerForm">
+                <input type="text" id="regName" placeholder="Full Name" required>
+                <input type="text" id="regUsername" placeholder="Username" required>
+                <input type="email" id="regEmail" placeholder="Email" required>
+                <input type="password" id="regPassword" placeholder="Password" required>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

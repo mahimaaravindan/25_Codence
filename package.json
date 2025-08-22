@@ -1,0 +1,40 @@
+{
+  "name": "securebank-vulnerable-demo",
+  "version": "1.0.0",
+  "description": "A demonstration website showcasing common web security vulnerabilities for educational purposes",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000 -o",
+    "dev": "npx http-server -p 8000 -c-1",
+    "serve": "python -m http.server 8000",
+    "api": "node server.js"
+  },
+  "keywords": [
+    "security",
+    "vulnerabilities",
+    "sql-injection",
+    "ssrf",
+    "redos",
+    "web-security",
+    "education",
+    "demo"
+  ],
+  "author": "Security Education Demo",
+  "license": "EDUCATIONAL-USE-ONLY",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "repository": {
+    "type": "demo",
+    "url": "educational-purpose-only"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
+
+
